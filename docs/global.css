@@ -1,0 +1,255 @@
+:root {
+  --bg-color: #f8f8f8;
+  --bg-box: #ffffff;
+  --bg-alt: #070a2b;
+  --dark-hover :#121b4b;
+  --primary: #21c2e1;
+  --text-color: #070a2b;
+}
+
+* { box-sizing: border-box }
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
+
+/*
+  # HEADER
+*/
+
+header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-gap: 1rem;
+  align-items: center;
+  padding: 1rem;
+  background-color: #ffffff;
+  border-radius: 12px
+}
+
+.header__logo {
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  padding-right: 0;
+  color: var(--primary);
+  border-radius: 8px;
+  font-size: 1.5rem
+}
+
+.header-vendors {
+  display: flex;
+  padding: 0 1rem
+}
+
+/*
+  # HEADER END
+*/
+
+/*
+  # ALARMS
+*/
+
+.alarms {
+  position: relative;
+  color: var(--text-color);
+  padding: 1rem;
+  border-radius: 4px;
+}
+
+.alarms > h2 {
+  font-size: 1.2rem;
+  margin: 0 0 1rem 0
+}
+
+.alarms__container {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 1rem;
+}
+
+.alarm-template__alarm {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  padding: 1rem;
+  background-color: var(--bg-box);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px 1px #f2f2f2;
+  cursor: pointer;
+  opacity: 1;
+  transition: 1s ease opacity;
+}
+
+.alarm-template__alarm--disabled {
+  opacity: .5
+}
+
+.alarm-template__days {
+  display: flex;
+  align-items: center;
+  margin-bottom: .5rem;
+  color: #999
+}
+
+.alarm-template__days-circle {
+  width: .5rem;
+  height: .5rem;
+  border-radius: 100%;
+  background-color: var(--primary);
+  margin-right: .5rem;
+}
+
+.alarm-template__time {
+  display: flex;
+  align-items: flex-end;
+  padding-left: 1rem
+}
+
+.alarm-template__time {
+  font-size: 2.5rem;
+}
+
+.alarm-template__type-time {
+  position: relative;
+  top: -6px;
+  left: .3rem;
+  font-size: 1.25rem;
+}
+
+.alarm-template__type-time::before {
+  content: '';
+  position: absolute;
+  top: -1.75rem;
+  left: 0;
+  width: 1.75rem;
+  height: 1.75rem;
+  background-image: url(./icons/day.png);
+  background-size: cover;
+  border-radius: 100%;
+}
+
+.alarm-template__type-time.sunrise::before {
+  background-image: url(./icons/sunrise.png);
+}
+.alarm-template__type-time.day::before {
+  background-image: url(./icons/day.png);
+}
+.alarm-template__type-time.night::before {
+  background-image: url(./icons/night.png);
+}
+
+.alarm-template__description {
+  padding-left: 1rem;
+  color: #999;
+}
+
+/*
+  # ALARMS END
+*/
+
+/*
+  # TOGGLE SWITCH
+*/
+
+input[type=checkbox]{
+	height: 0;
+	width: 0;
+	visibility: hidden;
+}
+
+.alarm-template-toggle__label {
+	cursor: pointer;
+	text-indent: -9999px;
+	width: 32px;
+	height: 16px;
+	background-color: #f2f2f2;
+	display: block;
+	border-radius: 100px;
+	position: relative;
+}
+
+.alarm-template-toggle__label::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  width: 24px;
+  height: 24px;
+  background-color: #b3ccd1;
+  border-radius: 90px;
+  transition: 0.3s ease background-color, .3s ease transform
+}
+
+.alarm-template-toggle__input:checked + label {
+  background-color: #74e3f9
+}
+
+.alarm-template-toggle__input:checked + label:after {
+  background-color: #21c2e1;
+	transform: translateX(calc(100% - 4px));
+}
+
+/*
+  # TOGGLE SWITCH
+*/
+
+.header__start {
+  display: block;
+  border-radius: 12px;
+  background-color: var(--primary);
+  color: #ffffff;
+  text-decoration: none;
+  width: fit-content;
+  padding: .5rem 1rem;
+  cursor: pointer;
+}
+
+.header__start.active {
+  cursor: default;
+  background-color: transparent;
+  color: var(--text-color);
+}
+
+.create-alarm {
+  position: fixed;
+  bottom: 1rem;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.create-alarm__button {
+  background-color: var(--primary);
+  color: #ffffff;
+  font-size: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px 1px rgb(97 157 169 / 50%);
+  cursor: pointer;
+  transition: .3s ease transform
+}
+
+.create-alarm__button:hover {
+  transform: translateY(-4px);
+}
+
+.create-alarm__button.icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 2.5rem;
+  width: 2.5rem;
+  font-weight: bold;
+  border-radius: 100%;
+}
+
+.create-alarm__button img {
+  width: 2rem;
+  height: 2rem;
+  filter: invert(1);
+}
