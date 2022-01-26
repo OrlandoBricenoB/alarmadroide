@@ -1,0 +1,14 @@
+{
+ "name": "Alarmadroide",
+ "short_name": "Alarmadroide",
+ "description": "Estoy trabajando en cumplir con tu rutina diaria.",
+ "background_color": "#070a2b",
+ "theme_color": "#21c2e1",
+ "display": "fullscreen",
+ "start_url": "/",
+ "icons": [{
+   "src": "icons/compare-512.png",
+   "sizes": "512x512",
+   "type": "image/png"
+ }]
+}
