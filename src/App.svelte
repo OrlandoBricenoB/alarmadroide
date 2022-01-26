@@ -1,6 +1,13 @@
 <script>
   import bridge from './helpers/bridge'
 
+/*
+  Interesante.
+  <Counter>
+    <AnotherComponent/>
+  </Counter>
+*/
+
   bridge.register({
     callback: data => {
       if (data === 'sort-alarms') {
@@ -10,11 +17,10 @@
     id: 'Home'
   })
 
-  import logo from './assets/svelte.png'
-  import htmlLogo from './assets/img/HTML5_logo_and_wordmark.svg'
-  import cssLogo from './assets/img/CSS3_logo_and_wordmark.svg'
-  import svelteLogo from './assets/img/Svelte_logo_by_gengns.svg'
-  import addIcon from './assets/icons/add.png'
+  const htmlLogo = 'https://orlandobricenob.github.io/alarmadroide/img/HTML5_logo_and_wordmark.svg'
+  const cssLogo  ='https://orlandobricenob.github.io/alarmadroide/img/CSS3_logo_and_wordmark.svg'
+  const svelteLogo = 'https://orlandobricenob.github.io/alarmadroide/img/Svelte_logo_by_gengns.svg'
+  const addIcon = 'https://orlandobricenob.github.io/alarmadroide/icons/add.png'
 
   import AlarmComponent from './components/Alarm.svelte'
   import Alarm from './helpers/Alarm'
@@ -91,16 +97,3 @@
   </div>
 </div>
 <!-- CREATE ALARM END -->
-
-<main>
-  <img src={logo} alt="Svelte Logo" width="2" height="2"/>
-  <!--
-  <Counter>
-    <AnotherComponent/>
-  </Counter>
-  -->
-</main>
-
-<style>
-
-</style>
