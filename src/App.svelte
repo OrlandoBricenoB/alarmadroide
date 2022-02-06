@@ -60,13 +60,17 @@
     vendorsDisplayed = !vendorsDisplayed
   }
 
-  const htmlLogo = new URL('./assets/img/HTML5_logo_and_wordmark.svg', import.meta.url).href
-  const cssLogo  = new URL('./assets/img/CSS3_logo_and_wordmark.svg', import.meta.url).href
-  const svelteLogo = new URL('./assets/img/Svelte_logo_by_gengns.svg', import.meta.url).href
+  //const htmlLogo = new URL('./assets/img/HTML5_logo_and_wordmark.svg', import.meta.url).href
+  //const cssLogo  = new URL('./assets/img/CSS3_logo_and_wordmark.svg', import.meta.url).href
+  //const svelteLogo = new URL('./assets/img/Svelte_logo_by_gengns.svg', import.meta.url).href
+  import htmlLogo from './assets/img/HTML5_logo_and_wordmark.svg'
+  import cssLogo from './assets/img/CSS3_logo_and_wordmark.svg'
+  import svelteLogo from './assets/img/Svelte_logo_by_gengns.svg'
   const alarmsIcon = new URL('./assets/icons/alarms.png', import.meta.url).href
   const addIcon = new URL('./assets/icons/add.png', import.meta.url).href
-  const logo = new URL('./assets/img/logo.png', import.meta.url).href
-  const joSwordLogo = new URL('./assets/img/Jo-Sword.png', import.meta.url).href
+  import logo from './assets/img/logo.png'
+  import joSwordLogo from './assets/img/Jo-Sword.png'
+  //const joSwordLogo = new URL('./assets/img/Jo-Sword.png', import.meta.url).href
 
   let audioElem
   const alarmSound = new URL('./assets/music/Beat Your Competition.mp3', import.meta.url).href
@@ -137,7 +141,7 @@
 <!-- MENU BOTTOM -->
 <div class="menu">
   <div class="menu__button menu__button--active">
-    <img src={alarmsIcon} alt="Add Icon" width="32" height="32" class="menu__button-image">
+    <img src={alarmsIcon} alt="Alarms Icon" width="32" height="32" class="menu__button-image">
   </div>
   <!-- Temporizador
   <div class="menu__button">
