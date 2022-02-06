@@ -41,6 +41,12 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
 }
 
+hr {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid var(--border-hover)
+}
+
 /*
   # HEADER
 */
@@ -67,11 +73,6 @@ header {
 .header__logo-title {
   font-size: 1.6rem;
   color: var(--primary-1);
-}
-
-.header-vendors {
-  display: flex;
-  padding: 0 1rem
 }
 
 /*
@@ -297,6 +298,16 @@ input[type=checkbox]{
   border-radius: 100%
 }
 
+.menu__button--jo-sword {
+  border-radius: 100%;
+  box-shadow: 0 0 0 #ffffff;
+  transition: .2s ease box-shadow
+}
+
+.menu__button--displayed {
+  box-shadow: 0 0 5px #ffffff
+}
+
 .menu__button--main {
   background-color: #ffffff;
   padding: 0;
@@ -361,4 +372,62 @@ input[type=checkbox]{
 
 .page-transition--hidden {
   display: none
+}
+
+/*
+  # VENDOR
+*/
+.vendors-information {
+  display: grid;
+  grid-template-columns: 1fr;
+  width: calc(100% - 2rem);
+  position: fixed;
+  bottom: 72px;
+  right: 1rem;
+  background-color: var(--primary-1);
+  padding: .5rem;
+  border-radius: 12px;
+  transform: translateX(150vw);
+  opacity: 0;
+  transition: .2s ease transform, .2s .1s ease opacity;
+}
+
+.vendors-information--displayed {
+  opacity: 1;
+  transform: translateX(0)
+}
+
+@media screen and (min-width: 441.98px) {
+  .vendors-information {
+    width: auto
+  }
+}
+
+.vendors-information__title {
+  color: #ffffff;
+  margin: .25rem;
+  font-size: 1rem
+}
+
+.vendors-information__hr {
+  margin: .125rem;
+  border-color: #ffffff
+}
+
+.technologies {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: .5rem
+}
+
+.technology {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.technology--svelte {
+  border-radius: 8px;
+  background: #fff;
 }

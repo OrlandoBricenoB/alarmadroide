@@ -54,6 +54,12 @@
     id: 'Home'
   })
 
+  let vendorsDisplayed = false
+
+  const displayVendors = () => {
+    vendorsDisplayed = !vendorsDisplayed
+  }
+
   const htmlLogo = new URL('./assets/img/HTML5_logo_and_wordmark.svg', import.meta.url).href
   const cssLogo  = new URL('./assets/img/CSS3_logo_and_wordmark.svg', import.meta.url).href
   const svelteLogo = new URL('./assets/img/Svelte_logo_by_gengns.svg', import.meta.url).href
@@ -111,19 +117,6 @@
   <div class="header__logo">
     <img src={logo} alt="Logo de Alarmadroide" width="48" height="48">
     <h3 class="header__logo-title">Alarmadroide</h3>
-    <!-- VENDOR INFORMATION
-    <div class="header-vendors">
-      <div class="header-vendors__vendor">
-        <img src={htmlLogo} alt="HTML Logo" width="32" height="32">
-      </div>
-      <div class="header-vendors__vendor">
-        <img src={cssLogo} alt="CSS Logo" width="32" height="32">
-      </div>
-      <div class="header-vendors__vendor">
-        <img src={svelteLogo} alt="Svelte Logo" width="32" height="32">
-      </div>
-    </div>
-    <!-- VENDOR INFORMATION END -->
   </div>
 </header>
 <!-- HEADER END -->
@@ -159,11 +152,29 @@
     <img src={addIcon} alt="Add Icon" width="32" height="32" class="menu__button-image">
   </div>
   -->
-  <div class="menu__button menu__button--jo-sword">
+  <div class={`menu__button menu__button--jo-sword ${vendorsDisplayed ? 'menu__button--displayed' : ''}`} on:click={displayVendors}>
     <img src={joSwordLogo} alt="Add Icon" width="32" height="32" class="menu__button-image menu__button-image--jo-sword">
   </div>
 </div>
 <!-- MENU BUTTON END -->
+
+<!-- VENDORS -->
+<div class={`vendors-information ${vendorsDisplayed ? 'vendors-information--displayed' : ''}`}>
+  <h3 class="vendors-information__title">Made with ♥ by Orlando Briceño (Jo-Sword)</h3>
+  <hr class="vendors-information__hr">
+  <div class="technologies">
+    <div class="technology technology--html">
+      <img src={htmlLogo} alt="HTML Logo" width="32" height="32">
+    </div>
+    <div class="technology technology--css">
+      <img src={cssLogo} alt="CSS Logo" width="32" height="32">
+    </div>
+    <div class="technology technology--svelte">
+      <img src={svelteLogo} alt="Svelte Logo" width="32" height="32">
+    </div>
+  </div>
+</div>
+<!-- END VENDORS -->
 
 <!-- PAGE VIEW -->
 <div class={`page-container page-transition ${!page.open ? 'page-transition--animation-inverted' : ''}`}>
