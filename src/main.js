@@ -8,7 +8,7 @@ useRegisterSW({
 })
 
 const app = new App({
-  target: document.getElementById('app')
+  target: document.body
 })
 
 export default app
