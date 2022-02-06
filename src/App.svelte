@@ -60,20 +60,17 @@
     vendorsDisplayed = !vendorsDisplayed
   }
 
-  //const htmlLogo = new URL('./assets/img/HTML5_logo_and_wordmark.svg', import.meta.url).href
-  //const cssLogo  = new URL('./assets/img/CSS3_logo_and_wordmark.svg', import.meta.url).href
-  //const svelteLogo = new URL('./assets/img/Svelte_logo_by_gengns.svg', import.meta.url).href
   import htmlLogo from './assets/img/HTML5_logo_and_wordmark.svg'
   import cssLogo from './assets/img/CSS3_logo_and_wordmark.svg'
   import svelteLogo from './assets/img/Svelte_logo_by_gengns.svg'
-  const alarmsIcon = new URL('./assets/icons/alarms.png', import.meta.url).href
-  const addIcon = new URL('./assets/icons/add.png', import.meta.url).href
+  import alarmsIcon from './assets/icons/alarms.png'
+  import addIcon from './assets/icons/add.png'
   import logo from './assets/img/logo.png'
   import joSwordLogo from './assets/img/Jo-Sword.png'
-  //const joSwordLogo = new URL('./assets/img/Jo-Sword.png', import.meta.url).href
 
   let audioElem
-  const alarmSound = new URL('./assets/music/Beat Your Competition.mp3', import.meta.url).href
+  //const alarmSound = new URL('./assets/music/Beat Your Competition.mp3', import.meta.url).href // Make a base64.
+  import alarmSound from './assets/music/Beat Your Competition.mp3'
 
   import ODM from './lib/ODM'
   const ODMInstance = new ODM()
