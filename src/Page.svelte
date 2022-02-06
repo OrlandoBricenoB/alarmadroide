@@ -15,7 +15,7 @@
     }, 'Home')
   }
 
-  const closeIcon = new URL('./assets/icons/close.png', import.meta.url).href
+  import closeIcon from './assets/icons/close.png'
 </script>
 
 <div class="page-header">

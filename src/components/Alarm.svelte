@@ -1,5 +1,5 @@
 <script>
-  const editClockIcon = new URL('../assets/icons/edit-alarm.png', import.meta.url).href
+  import editClockIcon from '../assets/icons/edit-alarm.png'
 
   import bridge from '../helpers/bridge'
   export let alarm
