@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "RD /S dist && vite build && RD /S docs && XCOPY dist docs /s",
+    "build": "RD /S docs && vite build && XCOPY dist docs /s",
     "preview": "vite preview",
-    "serve": "RD /S dist && vite build && vite preview"
+    "serve": "vite build && vite preview"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^1.0.0-next.30",
