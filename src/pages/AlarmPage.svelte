@@ -1,10 +1,9 @@
 <script>
-  import { onMount, tick } from 'svelte'
   import bridge from '../helpers/bridge'
   import Alarm from '../helpers/Alarm'
   import ODM from '../lib/ODM'
-  export let data = new Alarm()
-  let newAlarm = false
+  export let data = new Alarm({})
+  let newAlarm = !data.name
 
   const ODMInstance = new ODM()
   const alarmsCollection = ODMInstance.getCollection('alarms')
@@ -39,7 +38,16 @@
     return true
   }
 
+  const closePage = () => {
+    bridge.send({
+      id: 'closePage',
+      from: 'page'
+    }, 'Home')
+  }
+
   const save = () => {
+    newAlarm && alarmsCollection.create(data) && closePage()
+    if (newAlarm) return
     const [updateError, updatedDocument] = alarmsCollection.update({
       where: {
         name: data.name
@@ -49,11 +57,7 @@
       }
     })
     data = updatedDocument
-    console.log('Actualizada con éxito.')
-    bridge.send({
-      id: 'closePage',
-      from: 'page'
-    }, 'Home')
+    closePage()
   }
 
   const deleteAction = () => {
@@ -68,12 +72,6 @@
     }, 'Home')
     console.log(deleteError, deleteSuccess)
   }
-
-
-  onMount(async () => {
-    await tick()
-    if (!data) newAlarm = true
-  })
 </script>
 
 <div class="form-element">

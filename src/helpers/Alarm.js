@@ -18,7 +18,7 @@ import dayNames from './dayNames'
 
 class Alarm {
   constructor({ name='', days=[], hours=0, minutes=0 }) {
-    this.name = name || 'Sin nombre'
+    this.name = name
     this.days = days.length === 0 ? [0, 1, 2, 3, 4, 5, 6] : days
     this.hours = hours || 0
     this.minutes = minutes || 0

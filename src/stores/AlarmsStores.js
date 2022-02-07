@@ -20,7 +20,7 @@ function createAlarmsStore() {
             if (document.name === data.name) return data
             return document
           })
-          updatedObject.push(data)
+          if (index === -1) updatedObject.push(data)
           return updatedObject
         }
       })

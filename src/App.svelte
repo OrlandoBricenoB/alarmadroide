@@ -23,7 +23,6 @@
   }
 
   const changePage = ({from, data}) => {
-    // Crear primero la transición, todos los elementos se van a la derecha.
     page.openTransition = true
     page.data    = data
     page.from = from
@@ -91,15 +90,37 @@
   import { alarmsStore } from './stores/AlarmsStores'
 
   let alarms = []
-  alarmsStore.subscribe(storedAlarms => (alarms = storedAlarms))
 
   const sortAlarms = () => {
-    const newAlarms = [...alarms]
-    // ! Crear métodos para ordenar alarmas desde la que está más pronta a ejecutarse a la más lejana.
-    /*newAlarms.sort((a, b) => {
+    const alarmsSorted = alarms.sort((a, b) => {
+      let aDate = new Date()
+      aDate.setHours(a.hours)
+      aDate.setMinutes(a.minutes)
 
-    })*/
-    //alarms = [...newAlarms]
+      let bDate = new Date()
+      bDate.setHours(b.hours)
+      bDate.setMinutes(b.minutes)
+
+      const diff = bDate.getTime() - aDate.getTime()
+      if (diff < 0) return 1
+      if (diff === 0) return 0
+      if (diff > 0) return -1
+    })
+    alarms = alarmsSorted
+  }
+
+  alarmsStore.subscribe(storedAlarms => {
+    alarms = storedAlarms
+    sortAlarms()
+  })
+
+  const openCreateAlarm = () => {
+    changePage({
+      from: 'Alarm',
+      data: new Alarm({
+        name: ''
+      })
+    })
   }
 
   onMount(async () => {
@@ -140,7 +161,7 @@
     <img src={addIcon} alt="Add Icon" width="32" height="32" class="menu__button-image">
   </div>
   -->
-  <div class="menu__button menu__button--main">
+  <div class="menu__button menu__button--main" on:click={openCreateAlarm}>
     <img src={addIcon} alt="Add Icon" width="32" height="32" class="menu__button-image--main">
   </div>
   <!-- Cronómetro
