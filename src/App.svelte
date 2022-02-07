@@ -4,16 +4,8 @@
 
   import Page from './Page.svelte'
   import AlarmPage from './pages/AlarmPage.svelte'
-
   import AlarmComponent from './components/Alarm.svelte'
   import Alarm from './helpers/Alarm'
-
-/*
-  Interesante.
-  <Counter>
-    <An./lib/odmonent/>
-  </Counter>
-*/
 
   let page = {
     open: false,
@@ -55,10 +47,7 @@
   })
 
   let vendorsDisplayed = false
-
-  const displayVendors = () => {
-    vendorsDisplayed = !vendorsDisplayed
-  }
+  const displayVendors = () => (vendorsDisplayed = !vendorsDisplayed)
 
   import htmlLogo from './assets/img/HTML5_logo_and_wordmark.svg'
   import cssLogo from './assets/img/CSS3_logo_and_wordmark.svg'
@@ -69,15 +58,11 @@
   import joSwordLogo from './assets/img/Jo-Sword.png'
 
   let audioElem
-  //const alarmSound = new URL('./assets/music/Beat Your Competition.mp3', import.meta.url).href // Make a base64.
   import alarmSound from './assets/music/Beat Your Competition.mp3'
 
   import ODM from './lib/ODM'
   const ODMInstance = new ODM()
   const alarmsCollection = ODMInstance.getCollection('alarms')
-  //const [alarmPruebaError, alarmPrueba] = alarmsCollection.findOne({ where: {name: 'Prueba'} })
-  //if (alarmPruebaError) console.log(alarmPruebaError)
-  //console.log(alarmPrueba)
 
   // # Alarmas por defecto.
   alarmsCollection.create({
@@ -93,10 +78,18 @@
     days: [1, 2, 3, 4, 5]
   })
 
+  //const [alarmPruebaError, alarmPrueba] = alarmsCollection.findOne({ where: {name: 'Prueba'} })
+  //if (alarmPruebaError) console.log(alarmPruebaError)
+  //console.log(alarmPrueba)
+
   //alarmsCollection.delete({ where: {name: 'Prueba' } })
+  import { alarmsStore } from './stores/AlarmsStores'
 
-  let alarms = alarmsCollection.find()
-
+  let alarms = []
+  alarmsStore.subscribe(storedAlarms => {
+    console.log(storedAlarms)
+    alarms = storedAlarms
+  })
 
   const sortAlarms = () => {
     const newAlarms = [...alarms]

@@ -16,7 +16,7 @@
     id: 'AlarmPage'
   })
 
-  const getNumbers = (a, b) => {
+  /*const getNumbers = (a, b) => {
     const numbers = []
 
     const addNextNumber = n => {
@@ -28,6 +28,14 @@
     addNextNumber(a)
 
     return numbers
+  }*/
+
+  let timeValue = data.displayTime()
+  const setTime = () => {
+    const [hours, minutes] = timeValue.split(':')
+    data.hours = parseInt(hours)
+    data.minutes = parseInt(minutes)
+    return true
   }
 
   const save = () => {
@@ -40,7 +48,13 @@
       }
     })
     data = updatedDocument
+    console.log('Actualizada con éxito.')
+    bridge.send({
+      id: 'closePage',
+      from: 'page'
+    }, 'Home')
   }
+
 
   onMount(async () => {
     await tick()
@@ -48,24 +62,9 @@
   })
 </script>
 
-<div class="box">
-  <div class="form-element">
-    <label for="alarmHourField" class="form-element__label">Hora</label>
-    <select id="alarmHourField" class="form-element__field" bind:value={data.hours}>
-      {#each getNumbers(0, 23) as hour}
-      <option selected={data.hours === hour ? true:false}>{hour}</option>
-      {/each}
-    </select>
-  </div>
-
-  <div class="form-element">
-    <label for="alarmHourField" class="form-element__label">Minuto</label>
-    <select id="alarmHourField" class="form-element__field" bind:value={data.minutes}>
-      {#each getNumbers(0, 59) as minute}
-      <option selected={data.minutes === minute ? true:false}>{minute}</option>
-      {/each}
-    </select>
-  </div>
+<div class="form-element">
+  <label for="alarmHourField" class="form-element__label">Hora</label>
+  <input type="time" id="alarmHourField" class="form-element__field" bind:value={timeValue} on:change={setTime}>
 </div>
 
 <div class="form-element">

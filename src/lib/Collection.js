@@ -1,4 +1,5 @@
 import { BadRequest, NotFound } from './Errors.js'
+import { alarmsStore } from '../stores/AlarmsStores'
 
 const isEmpty = object => {
   for (const property in object) {
@@ -88,6 +89,7 @@ class Collection {
         document[setKey] = query.set[setKey]
       })
       updatedDocuments[i] = new this.schema(document)
+      alarmsStore.update(updatedDocuments[i])
       documents[i] = {
         index,
         data: new this.schema(document)
@@ -98,6 +100,7 @@ class Collection {
       allDocuments[document.index] = document.data
       return document
     })
+
     this._setDB(allDocuments)
     return [null, updatedDocuments.length === 1 ? updatedDocuments[0] : updatedDocuments]
   }
