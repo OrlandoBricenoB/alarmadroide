@@ -339,8 +339,21 @@ input[type=checkbox]{
 
 .page-header {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr auto auto;
+  grid-gap: 0.5rem;
   padding: 1rem;
+}
+
+.page-header__action {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.page-header__action-btn {
+  display: flex;
+  align-items: center;
 }
 
 .page-header__close-icon {

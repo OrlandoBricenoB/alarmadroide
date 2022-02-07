@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "RD /S docs && vite build && XCOPY dist docs /s",
+    "build": "vite build",
     "preview": "vite preview",
     "serve": "vite build && vite preview"
   },

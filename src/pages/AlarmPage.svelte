@@ -12,6 +12,7 @@
   bridge.register({
     callback: ({id, from}) => {
       if (id === 'saveAction' && from === 'page') save()
+      if (id === 'deleteAction' && from === 'page') deleteAction()
     },
     id: 'AlarmPage'
   })
@@ -53,6 +54,19 @@
       id: 'closePage',
       from: 'page'
     }, 'Home')
+  }
+
+  const deleteAction = () => {
+    const [deleteError, deleteSuccess] = alarmsCollection.delete({
+      where: {
+        name: data.name
+      }
+    })
+    if (!deleteError) return bridge.send({
+      id: 'closePage',
+      from: 'page'
+    }, 'Home')
+    console.log(deleteError, deleteSuccess)
   }
 
 

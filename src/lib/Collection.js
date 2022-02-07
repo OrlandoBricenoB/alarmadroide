@@ -72,6 +72,7 @@ class Collection {
 
     const newDocument = new this.schema(data)
     db.push(newDocument)
+    alarmsStore.update(newDocument)
     this._setDB(db)
     return newDocument
   }
@@ -116,6 +117,8 @@ class Collection {
       return !isSame
     })
     this._setDB(newDocuments)
+    const documentsWithSchema = newDocuments.map(_document => new this.schema(_document))
+    alarmsStore.update(documentsWithSchema)
     return [null, newDocuments]
   }
 }

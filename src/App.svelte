@@ -64,19 +64,24 @@
   const ODMInstance = new ODM()
   const alarmsCollection = ODMInstance.getCollection('alarms')
 
-  // # Alarmas por defecto.
-  alarmsCollection.create({
-    name: 'Despertador',
-    hours: 4,
-    minutes: 30
-  })
+  // # Alarmas por defecto en la primera visita.
+  const firstVisit = window.localStorage.getItem('firstVisit')
+  if (!firstVisit) {
+    alarmsCollection.create({
+      name: 'Despertador',
+      hours: 4,
+      minutes: 30
+    })
 
-  alarmsCollection.create({
-    name: 'Ejercicios',
-    hours: 21,
-    minutes: 0,
-    days: [1, 2, 3, 4, 5]
-  })
+    alarmsCollection.create({
+      name: 'Ejercicios',
+      hours: 21,
+      minutes: 0,
+      days: [1, 2, 3, 4, 5]
+    })
+    window.localStorage.setItem('firstVisit', 'pass')
+  }
+
 
   //const [alarmPruebaError, alarmPrueba] = alarmsCollection.findOne({ where: {name: 'Prueba'} })
   //if (alarmPruebaError) console.log(alarmPruebaError)
@@ -86,10 +91,7 @@
   import { alarmsStore } from './stores/AlarmsStores'
 
   let alarms = []
-  alarmsStore.subscribe(storedAlarms => {
-    console.log(storedAlarms)
-    alarms = storedAlarms
-  })
+  alarmsStore.subscribe(storedAlarms => (alarms = storedAlarms))
 
   const sortAlarms = () => {
     const newAlarms = [...alarms]
