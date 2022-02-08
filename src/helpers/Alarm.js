@@ -17,22 +17,36 @@ import dayNames from './dayNames'
 */
 
 class Alarm {
-  constructor({ name='', days=[], hours=0, minutes=0 }) {
+  constructor({ name='', days=[], hours=0, minutes=0, postDay }) {
     this.name = name
     this.days = days.length === 0 ? [0, 1, 2, 3, 4, 5, 6] : days
     this.hours = hours || 0
     this.minutes = minutes || 0
     this.playing = false
     this.disabled = false
+    this.postDay = postDay || new Date('1995-12-17T03:24:00')
   }
 
-  // # _play() => true
-  _play() { return this.playing = true }
+  // # play() => true
+  play() { return this.playing = true }
 
   // # checkDay() => [Error, dayString]
   checkDay(exclude=[]) {
     const { day: nowDay } = _Date(new Date())
     let alarmDays = this.days
+
+    const postDate = this.postDay
+    postDate.setHours(0)
+    postDate.setMinutes(0)
+    const nowDate = new Date()
+    nowDate.setHours(0)
+    nowDate.setMinutes(0)
+    //console.log(postDate, nowDate)
+    if (postDate.getTime() === nowDate.getTime()) {
+      console.log('postDate es hoy.')
+      exclude.push(postDate.getDay())
+    }
+
     if (exclude.length) {
       alarmDays = alarmDays.filter(alarmDay => {
         return !exclude.includes(alarmDay)
@@ -44,7 +58,6 @@ class Alarm {
     if (alarmDay) return [null, dayNames[alarmDay]]
 
     let nearDay = alarmDays.find(day => day > nowDay) || alarmDays.find(day => day < nowDay)
-
     let dayString = nearDay === nowDay+1 ? 'Tomorrow' : dayNames[nearDay]
     return [{ msg: 'An error has been ocurred.' }, dayString]
   }
@@ -64,8 +77,8 @@ class Alarm {
   // # checkTime() => bool of alarm is active.
   checkTime() {
     const { hours: nowHours, minutes: nowMinutes } = _Date(new Date())
-    if (this.hours < nowHours) return this._play()
-    if (this.hours === nowHours && this.minutes <= nowMinutes) return this._play()
+    if (this.hours < nowHours) return this.play()
+    if (this.hours === nowHours && this.minutes <= nowMinutes) return this.play()
     return false
   }
 
@@ -97,7 +110,7 @@ class Alarm {
     toTimeDate.setMinutes(this.minutes)
     const diff = Date.now() - toTimeDate.getTime()
 
-    const [alarmError, alarmDayString] = this.checkDay([new Date().getDay()])
+    const [alarmError, alarmDayString] = this.checkDay()
 
     if (alarmError || diff < 0) {
       if (alarmDayString === 'Tomorrow') return 'Ésta alarma se activará mañana.'
@@ -105,10 +118,12 @@ class Alarm {
     }
 
     const toTimeDayJS = dayjs(toTimeDate)
-    const diffHours = dayjs().diff(toTimeDayJS, 'hour')
-    const diffMinutes = dayjs().diff(toTimeDayJS, 'minute')
-    if (!diffHours) return `Falta${diffMinutes < 2 ? '' : 'n'} ${diffMinutes} minuto${diffMinutes < 2 ? '' : 's'}.`
-    return `Falta${diffHours < 2 ? '' : 'n'} ${diffHours} hora${diffHours < 2 ? '' : 's'}.`
+    const diffHours = toTimeDayJS.diff(dayjs(), 'hour')
+    const diffMinutes = toTimeDayJS.diff(dayjs(), 'minute')
+    if (diffHours <= 0 && diffMinutes <= 0) return 'Ejecutando...'
+    if (!diffHours) return `Falta${diffMinutes === 1 ? '' : 'n'} ${diffMinutes} minuto${diffMinutes === 1 ? '' : 's'}.`
+
+    return `Falta${diffHours === 1 ? '' : 'n'} ${diffHours} hora${diffHours === 1 ? '' : 's'} y ${diffMinutes} minuto${diffMinutes === 1 ? '' : 's'}.`
   }
 }
 

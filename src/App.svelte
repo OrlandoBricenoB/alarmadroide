@@ -123,10 +123,51 @@
     })
   }
 
+  let alarmPlaying = new Alarm({})
+
+  const thanksAlarm = () => {
+    alarmPlaying.playing = false
+    const alarm = alarms.find(alarm => alarm.name === alarmPlaying.name)
+    alarmPlaying = new Alarm({})
+    audioElem.muted = true
+
+    // Editar la alarma.
+    const [updateError, updatedDocument] = alarmsCollection.update({
+      where: {
+        name: alarm.name
+      },
+      set: {
+        postDay: new Date()
+      }
+    })
+    console.log(updateError, updatedDocument)
+  }
+
   onMount(async () => {
     await tick()
-    audioElem.volume = 0
+    audioElem.muted = true
+
+    // ? https://developer.chrome.com/blog/autoplay/ - Need a click, tap, etc. To play a audio.
+    window.addEventListener('click', () => {
+      if (audioElem.paused) audioElem.play()
+    })
+
+    // Verificar si hay alguna alarma para reproducir:
+    setInterval(() => {
+      alarms.forEach(alarm => {
+        const [alarmError, alarmDayString] = alarm.checkDay()
+        if (!alarmError && alarm.checkTime() && audioElem && audioElem.muted) {
+          audioElem.muted = false
+          audioElem.currentTime = 0
+          alarmPlaying = alarm
+        }
+      })
+    }, 5000)
   })
+
+  import sunriseIcon from '/icons/sunrise.png'
+  import dayIcon from '/icons/day.png'
+  import nightIcon from '/icons/night.png'
 </script>
 
 <!-- HEADER -->
@@ -203,4 +244,27 @@
 </div>
 <!-- PAGE VIEW END -->
 
-<audio src={alarmSound} autoplay loop bind:this={audioElem}></audio>
+<!-- ALARM PLAYING -->
+<div class={`alarm-playing ${alarmPlaying.playing ? 'alarm-playing--playing':''}`}>
+  <div class="alarm-playing__typeImage">
+    {#if alarmPlaying.typeTimeState() === 'night'}
+    <img src={nightIcon} width="64" height="64" alt="Night Icon">
+    {:else if alarmPlaying.typeTimeState() === 'day'}
+    <img src={dayIcon} width="64" height="64" alt="Day Icon">
+    {:else}
+    <img src={sunriseIcon} width="64" height="64" alt="Sunrise Icon">
+    {/if}
+  </div>
+  <div class="alarm-playing__time">
+    <time>{alarmPlaying.displayTime()}</time>
+    <div class="alarm-playing__typeTime">{alarmPlaying.displayTypeTime()}</div>
+  </div>
+  <div class="alarm-playing__name">
+    <h3>{alarmPlaying.name}</h3>
+  </div>
+  <div class="alarm-playing__button-container">
+    <button class="alarm-playing__button" on:click={thanksAlarm}>Gracias</button>
+  </div>
+</div>
+<audio src={alarmSound} muted autoplay loop bind:this={audioElem}></audio>
+<!-- ALARM PLAYING END -->

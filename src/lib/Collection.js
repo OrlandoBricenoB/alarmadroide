@@ -86,9 +86,11 @@ class Collection {
 
     documents.forEach((document, i) => {
       const index = allDocuments.findIndex(doc => doc.name === document.name)
+      if (index !== i) return
       Object.keys(query.set).forEach(setKey => {
         document[setKey] = query.set[setKey]
       })
+
       updatedDocuments[i] = new this.schema(document)
       alarmsStore.update(updatedDocuments[i])
       documents[i] = {

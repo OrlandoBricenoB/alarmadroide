@@ -10,7 +10,7 @@
   --border-hover: #99A3BA;
   --text-color: #1d204c;
   --text-color-headline: #070a2b;
-  --shadow: rgba(22, 30, 50, .04);
+  --shadow: rgba(22, 30, 50, .1);
 }
 
 * { box-sizing: border-box }
@@ -444,3 +444,111 @@ input[type=checkbox]{
   border-radius: 8px;
   background: #fff;
 }
+
+/* AlarmPage Form */
+.form-element__options {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.form-element__option {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: .5rem 0.25rem;
+  background-color: #ffffff;
+  border: 1px solid var(--border);
+  border-right: none;
+  cursor: pointer
+}
+
+.form-element__option:hover { background-color: #f7f9fd }
+.form-element__option:active { background-color: #edf0f5 }
+
+.form-element__option:first-child {
+  border-right: none;
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+}
+
+.form-element__option:last-child {
+  border-right: 1px solid var(--border);
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+.form-element__option--selected {
+  background-color: #21c2e1;
+  color: #fff;
+  border-color: #1ba8c3;
+}
+.form-element__option--selected:last-child { border-color: #1ba8c3 }
+.form-element__option--selected:hover { background-color: #21c2e1 }
+.form-element__option--selected:active { background-color: #1ba8c3 }
+
+/*
+  # Alarm Playing
+*/
+.alarm-playing {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100vh;
+  padding: 1rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  background-color: rgb(33 194 225 / 90%);
+
+  transform: scale(0);
+  transition: .2s ease transform
+}
+
+.alarm-playing--playing {
+  transform: scale(1)
+}
+
+.alarm-playing__typeImage {
+  text-align: center
+}
+
+.alarm-playing__time {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  font-size: 3.5rem;
+}
+
+.alarm-playing__typeTime {
+  font-size: .65em;
+  position: relative;
+  top: -0.15em
+}
+
+.alarm-playing__name {
+  font-size: 1.5rem
+}
+
+.alarm-playing__button-container {
+  display: flex;
+  align-items: flex-end
+}
+
+.alarm-playing__button {
+  padding: 0.5rem 1rem;
+  border: none;
+
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 5px var(--shadow);
+  cursor: pointer;
+}
+
+.alarm-playing__button:hover { background-color: #ededed }
+.alarm-playing__button:active { background-color: #fff }
