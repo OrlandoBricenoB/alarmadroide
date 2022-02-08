@@ -132,7 +132,7 @@
     audioElem.muted = true
 
     // Editar la alarma.
-    const [updateError, updatedDocument] = alarmsCollection.update({
+    alarmsCollection.update({
       where: {
         name: alarm.name
       },
@@ -140,7 +140,6 @@
         postDay: new Date()
       }
     })
-    console.log(updateError, updatedDocument)
   }
 
   onMount(async () => {

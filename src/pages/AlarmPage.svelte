@@ -3,6 +3,7 @@
   import Alarm from '../helpers/Alarm'
   import ODM from '../lib/ODM'
   export let data = new Alarm({})
+  let alarmEditable = new Alarm(data)
   let newAlarm = !data.name
 
   const ODMInstance = new ODM()
@@ -30,11 +31,11 @@
     return numbers
   }*/
 
-  let timeValue = data.displayTime()
+  let timeValue = alarmEditable.displayTime()
   const setTime = () => {
     const [hours, minutes] = timeValue.split(':')
-    data.hours = parseInt(hours)
-    data.minutes = parseInt(minutes)
+    alarmEditable.hours = parseInt(hours)
+    alarmEditable.minutes = parseInt(minutes)
     return true
   }
 
@@ -46,24 +47,24 @@
   }
 
   const save = () => {
-    newAlarm && alarmsCollection.create(data) && closePage()
+    newAlarm && alarmsCollection.create(alarmEditable) && closePage()
     if (newAlarm) return
     const [updateError, updatedDocument] = alarmsCollection.update({
       where: {
         name: data.name
       },
       set: {
-        ...data
+        ...alarmEditable
       }
     })
-    data = updatedDocument
+    alarmEditable = updatedDocument
     closePage()
   }
 
   const deleteAction = () => {
     const [deleteError, deleteSuccess] = alarmsCollection.delete({
       where: {
-        name: data.name
+        name: alarmEditable.name
       }
     })
     if (!deleteError) return bridge.send({
@@ -73,13 +74,13 @@
     console.log(deleteError, deleteSuccess)
   }
 
-  let days = data.days
+  let days = alarmEditable.days
   const toggleDay = day => {
     let newDays = []
     days.includes(day) && (newDays = days.filter(_day => _day !== day)) || (newDays = days.concat([day]))
     newDays.sort()
     days = newDays
-    data.days = [ ...days ]
+    alarmEditable.days = [ ...days ]
   }
 </script>
 

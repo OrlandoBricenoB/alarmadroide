@@ -17,14 +17,14 @@ import dayNames from './dayNames'
 */
 
 class Alarm {
-  constructor({ name='', days=[], hours=0, minutes=0, postDay }) {
+  constructor({ name='', days=[], hours=0, minutes=0, postDay=new Date('1995-12-17T03:24:00') }) {
     this.name = name
     this.days = days.length === 0 ? [0, 1, 2, 3, 4, 5, 6] : days
     this.hours = hours || 0
     this.minutes = minutes || 0
     this.playing = false
     this.disabled = false
-    this.postDay = postDay || new Date('1995-12-17T03:24:00')
+    this.postDay = postDay
   }
 
   // # play() => true
@@ -35,15 +35,11 @@ class Alarm {
     const { day: nowDay } = _Date(new Date())
     let alarmDays = this.days
 
-    const postDate = this.postDay
-    postDate.setHours(0)
-    postDate.setMinutes(0)
+    const postDate = new Date(this.postDay)
     const nowDate = new Date()
-    nowDate.setHours(0)
-    nowDate.setMinutes(0)
-    //console.log(postDate, nowDate)
-    if (postDate.getTime() === nowDate.getTime()) {
-      console.log('postDate es hoy.')
+    const postEqualNowDateMonth = postDate.getDate() === nowDate.getDate() && postDate.getMonth() === nowDate.getMonth()
+    if (postEqualNowDateMonth && postDate.getFullYear() === nowDate.getFullYear()) {
+      // La alarma ya se pospuso hoy, así que pasará a Tomorrow.
       exclude.push(postDate.getDay())
     }
 
